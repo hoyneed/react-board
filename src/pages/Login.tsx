@@ -16,7 +16,12 @@ function LoginPage() {
             <div className="w-full h-full flex items-center justify-center">
                 <Card className="w-full max-w-xs">
                     <CardHeader>
-                        <CardTitle className="text-lg">로그인</CardTitle>
+                        <div className="w-full flex items-center justify-between">
+                            <CardTitle className="text-lg">로그인</CardTitle>
+                            <Button variant="outline" className="w-4 h-4">
+                                홈
+                            </Button>
+                        </div>
                         <CardDescription>
                             로그인을 위한 정보를 입력해주세요
                         </CardDescription>
@@ -64,11 +69,13 @@ function LoginPage() {
                                 alt="구글 이미지"
                                 className="size-4"
                             />
-                            <span>구글로 로그인하기</span>
+                            <a href="https://www.google.com/">
+                                구글로 로그인하기
+                            </a>
                         </Button>
                         <div className="flex items-center gap-6  text-sm">
                             <span>계정이 없으신가요?</span>
-                            <a href="" className="hover:underline">
+                            <a href="/sign-up" className="hover:underline">
                                 회원가입
                             </a>
                         </div>

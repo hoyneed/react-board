@@ -1,5 +1,5 @@
 function SignupPage() {
-    return <div>Signup</div>;
+    return <div>회원가입</div>;
 }
 
 export default SignupPage;
