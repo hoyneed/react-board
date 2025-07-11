@@ -1,3 +1,5 @@
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -13,14 +15,26 @@ import { Label } from "@/components/ui/label";
 function LoginPage() {
     return (
         <div className="page">
-            <div className="w-full h-full flex items-center justify-center">
-                <Card className="w-full max-w-xs">
+            <Header />
+            <div className="w-full flex-1 flex flex-col items-center justify-center gap-6">
+                <div className="w-full flex flex-col items-center justify-around gap-2">
+                    <span className="text-xl font-semibold mb-4">
+                        안녕하세요 👏
+                    </span>
+                    <div>
+                        <span className="text-red-400">밍고</span>
+                        <span className="text-sm">
+                            에 방문해주셔서 감사합니다.
+                        </span>
+                    </div>
+                    <span className="text-sm">
+                        서비스를 이용하려면 로그인을 진행해주세요.
+                    </span>
+                </div>
+                <Card className="w-full max-w-sm">
                     <CardHeader>
                         <div className="w-full flex items-center justify-between">
                             <CardTitle className="text-lg">로그인</CardTitle>
-                            <Button variant="outline" className="w-4 h-4">
-                                홈
-                            </Button>
                         </div>
                         <CardDescription>
                             로그인을 위한 정보를 입력해주세요
@@ -53,6 +67,7 @@ function LoginPage() {
                                     <Input
                                         id="password"
                                         type="password"
+                                        placeholder="비밀번호를 입력하세요"
                                         required
                                     />
                                 </div>
@@ -60,10 +75,13 @@ function LoginPage() {
                         </form>
                     </CardContent>
                     <CardFooter className="flex-col gap-2">
-                        <Button type="submit" className="w-full">
+                        <Button type="submit" className="w-full font-semibold">
                             로그인
                         </Button>
-                        <Button variant="outline" className="w-full">
+                        <Button
+                            variant="outline"
+                            className="w-full font-semibold"
+                        >
                             <img
                                 src="src/assets/img/google.svg"
                                 alt="구글 이미지"
@@ -75,13 +93,14 @@ function LoginPage() {
                         </Button>
                         <div className="flex items-center gap-6  text-sm">
                             <span>계정이 없으신가요?</span>
-                            <a href="/sign-up" className="hover:underline">
+                            <a href="/sign-up" className="underline">
                                 회원가입
                             </a>
                         </div>
                     </CardFooter>
                 </Card>
             </div>
+            <Footer />
         </div>
     );
 }
