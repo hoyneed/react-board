@@ -9,7 +9,7 @@ function TopicsPage() {
             {/* 헤더 영역 */}
             <Header />
             <main className="main w-full flex-1 flex flex-col items-center">
-                <div className="main__container w-full flex-1 flex">
+                <div className="main__container w-full max-w-332 flex-1 flex">
                     <SidebarProvider>
                         <AppSidebar />
                         <main></main>
