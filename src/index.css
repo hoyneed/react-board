@@ -148,3 +148,16 @@
     align-items: center;
     justify-content: space-between;
 }
+
+.threeEllpsis {
+    width: 156px;
+    min-width: 156px;
+    height: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    font-size: 24px;
+}
