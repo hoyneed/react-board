@@ -58,12 +58,12 @@ function LoginPage() {
                                         <Label htmlFor="비밀번호">
                                             비밀번호
                                         </Label>
-                                        <a
-                                            href="#"
+                                        <Link
+                                            to="#"
                                             className="ml-auto inline-block text-sm text-neutral-500 underline-offset-4 hover:underline"
                                         >
                                             아이디/비밀번호 찾기
-                                        </a>
+                                        </Link>
                                     </div>
                                     <Input
                                         id="password"
@@ -76,7 +76,10 @@ function LoginPage() {
                         </form>
                     </CardContent>
                     <CardFooter className="flex-col gap-2">
-                        <Button type="submit" className="w-full font-semibold">
+                        <Button
+                            type="submit"
+                            className="w-full font-semibold cursor-pointer"
+                        >
                             로그인
                         </Button>
                         <Button
@@ -88,9 +91,9 @@ function LoginPage() {
                                 alt="구글 이미지"
                                 className="size-4"
                             />
-                            <a href="https://www.google.com/">
+                            <Link to="https://www.google.com/">
                                 구글로 로그인하기
-                            </a>
+                            </Link>
                         </Button>
                         <div className="flex items-center gap-6  text-sm">
                             <span>계정이 없으신가요?</span>

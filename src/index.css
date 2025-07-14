@@ -164,9 +164,8 @@
     font-weight: 600;
 }
 .newTitleEllpsis {
-    min-width: 261px;
-    height: 46px;
-    min-height: 46px;
+    height: 48px;
+    min-height: 48px;
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;

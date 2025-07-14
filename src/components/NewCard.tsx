@@ -1,4 +1,5 @@
 import { ChartNoAxesColumnIncreasing, Heart } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 function NewCard() {
     return (
@@ -7,7 +8,7 @@ function NewCard() {
                 <img
                     src=""
                     alt="본문 이미지"
-                    className="size-30 bg-emerald-700"
+                    className="size-30 min-h-30 min-w-30 rounded-xl bg-emerald-700"
                 />
                 <div className="h-full flex-1 flex flex-col items-center">
                     <span className="newTitleEllpsis">
@@ -23,7 +24,10 @@ function NewCard() {
                 </div>
             </div>
             <div className="w-full h-10 min-h-10 gap-2 flex items-center">
-                <img src="" alt="프로필 사진" className="size-9 rounded-full" />
+                <Avatar className="size-9 rounded-full">
+                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
                 <div className="h-full flex-1 flex flex-col justify-center">
                     <div className="w-full h-4 text-[10px] text-muted-foreground font-medium flex gap-0.5">
                         <p>IT 및 기술 분야</p>

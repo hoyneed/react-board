@@ -1,13 +1,13 @@
 import {
     ChartNoAxesCombined,
     ChevronDown,
+    CodeXml,
     DraftingCompass,
     Footprints,
     Goal,
     Lightbulb,
     List,
     Rocket,
-    SeparatorVertical,
 } from "lucide-react";
 
 import {
@@ -21,6 +21,7 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useState } from "react";
+// import TOPIC_CATEGORY from "@/constants/category.constant";
 
 export function AppSidebar() {
     // Menu items.
@@ -46,7 +47,7 @@ export function AppSidebar() {
         {
             title: "IT•프로그래밍",
             url: "#",
-            icon: SeparatorVertical,
+            icon: CodeXml,
             light: false,
         },
         {
@@ -84,7 +85,7 @@ export function AppSidebar() {
     };
 
     return (
-        <Sidebar>
+        <Sidebar className="border-transparent">
             <SidebarContent>
                 <SidebarGroup>
                     <SidebarGroupLabel className="flex gap-4">
@@ -98,6 +99,7 @@ export function AppSidebar() {
                                         asChild
                                         onClick={() => handleItem(item.title)}
                                         isActive={item.light}
+                                        className="hover:pl-6 transition-all duration-300"
                                     >
                                         <a href={item.url}>
                                             <item.icon />
