@@ -5,10 +5,10 @@ function HotCard() {
         <div className="h-full w-[233px] min-w-[233px] flex flex-col items-center justify-between gap-2 cursor-pointer">
             <div className="w-full flex-1 rounded-2xl bg-blue-900 relative">
                 <img src="" alt="본문 사진" />
-                <div className="absolute bottom-0 left-0 w-full h-28 min-h-24 flex rounded-2xl p-2">
-                    <p className="threeEllpsis">
-                        ANBJSDKHASLDKSAHljhklddddddddddddddddd
-                    </p>
+                <div className="absolute bottom-0 left-0 w-full h-28 min-h-24 flex rounded-2xl p-2 overflow-hidden text-ellipsis">
+                    <div className="hotEllpsis">
+                        Atomic Design vs FSD, 프런트엔드 구조 설계의 길
+                    </div>
                     <div className="absolute bottom-2 right-2 size-9 flex items-center justify-center bg-neutral-700 rounded-sm">
                         <MousePointerClick size={20} />
                     </div>

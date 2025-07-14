@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Link } from "react-router-dom";
 
 function LoginPage() {
     return (
@@ -93,9 +94,9 @@ function LoginPage() {
                         </Button>
                         <div className="flex items-center gap-6  text-sm">
                             <span>계정이 없으신가요?</span>
-                            <a href="/sign-up" className="underline">
+                            <Link to="/sign-up" className="underline">
                                 회원가입
-                            </a>
+                            </Link>
                         </div>
                     </CardFooter>
                 </Card>
