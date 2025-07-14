@@ -17,17 +17,18 @@ import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 
 function SignupPage() {
+    const [total, setTotal] = useState<boolean>(false);
     const [check, setCheck] = useState([
-        { id: 0, label: "All", state: false },
-        { id: 1, label: "Service", state: false },
-        { id: 2, label: "Personal", state: false },
-        { id: 3, label: "marketing", state: false },
+        { id: 0, label: "Service", state: false },
+        { id: 1, label: "Personal", state: false },
+        { id: 2, label: "marketing", state: false },
     ]);
     const handleCheck = (prevIsChecked: boolean) => {
         const updatedItems = check.map((item) =>
             prevIsChecked ? { ...item, state: true } : { ...item, state: false }
         );
         setCheck(updatedItems);
+        setTotal(prevIsChecked);
     };
     const singleCheck = (id: number) => {
         const updatedItem = check.map((item) =>
@@ -38,6 +39,9 @@ function SignupPage() {
                 : { ...item }
         );
         setCheck(updatedItem);
+        if (check[id].state) {
+            setTotal(false);
+        }
     };
     return (
         <div className="page">
@@ -71,7 +75,7 @@ function SignupPage() {
                             <div className="w-full h-11 flex items-center gap-3 rounded-sm p-4 bg-neutral-800">
                                 <Checkbox
                                     id="all"
-                                    checked={check[0].state}
+                                    checked={total}
                                     onCheckedChange={(checked: boolean) =>
                                         handleCheck(checked)
                                     }
@@ -87,9 +91,9 @@ function SignupPage() {
                                     <div className="flex items-center gap-2">
                                         <Checkbox
                                             id="service"
-                                            checked={check[1].state}
+                                            checked={check[0].state}
                                             onCheckedChange={() =>
-                                                singleCheck(1)
+                                                singleCheck(0)
                                             }
                                         />
                                         <Label
@@ -113,9 +117,9 @@ function SignupPage() {
                                     <div className="flex items-center gap-2 ">
                                         <Checkbox
                                             id="personal"
-                                            checked={check[2].state}
+                                            checked={check[1].state}
                                             onCheckedChange={() =>
-                                                singleCheck(2)
+                                                singleCheck(1)
                                             }
                                         />
                                         <Label
@@ -145,9 +149,9 @@ function SignupPage() {
                                     <div className="flex items-center gap-2">
                                         <Checkbox
                                             id="marketing"
-                                            checked={check[3].state}
+                                            checked={check[2].state}
                                             onCheckedChange={() =>
-                                                singleCheck(3)
+                                                singleCheck(2)
                                             }
                                         />
                                         <Label

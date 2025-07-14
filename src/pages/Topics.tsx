@@ -2,9 +2,11 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import HotCard from "@/components/HotCard";
 import NewCard from "@/components/NewCard";
 import Hot from "@/components/Hot";
+import { PencilLine } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 function TopicsPage() {
     return (
@@ -15,7 +17,7 @@ function TopicsPage() {
                 <div className="main__container w-full max-w-332 flex-1 flex p-6">
                     <SidebarProvider>
                         <AppSidebar />
-                        <div className="main__container__contents h-full sm:w-[calc(100%-256px)] w-full flex flex-col">
+                        <div className="main__container__contents h-full sm:w-[calc(100%-256px)] w-full flex flex-col relative">
                             <Hot />
                             <div className="new w-full flex-1 flex flex-col p-2">
                                 <div className="new__header h-14 w-full flex flex-col gap-1">
@@ -42,6 +44,18 @@ function TopicsPage() {
                                     <NewCard />
                                     <NewCard />
                                 </div>
+                            </div>
+                            <div className="fixed right-1/2 bottom-10 translate-x-1/2 z-20 flex items-center gap-3 md:gap-4">
+                                <Button
+                                    asChild
+                                    variant="destructive"
+                                    className="flex items-center font-semibold h-9 w-50 md:py-6 md:text-base rounded-full"
+                                >
+                                    <Link to={"/Topics/new-topic"}>
+                                        <PencilLine size={24} />
+                                        토픽 작성하기
+                                    </Link>
+                                </Button>
                             </div>
                         </div>
                     </SidebarProvider>
