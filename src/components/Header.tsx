@@ -7,7 +7,7 @@ function Header() {
                 <div className="header__front h-full flex-1 flex items-center justify-start gap-4">
                     <Link to="/">
                         <img
-                            src="src/assets/img/logo_small.svg"
+                            src="/src/assets/img/logo_small.svg"
                             alt="logo"
                             className="w-10 h-10"
                         />

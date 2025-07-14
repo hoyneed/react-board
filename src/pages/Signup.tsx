@@ -14,8 +14,31 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Link } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 import { ChevronRight } from "lucide-react";
+import { useState } from "react";
 
 function SignupPage() {
+    const [check, setCheck] = useState([
+        { id: 0, label: "All", state: false },
+        { id: 1, label: "Service", state: false },
+        { id: 2, label: "Personal", state: false },
+        { id: 3, label: "marketing", state: false },
+    ]);
+    const handleCheck = (prevIsChecked: boolean) => {
+        const updatedItems = check.map((item) =>
+            prevIsChecked ? { ...item, state: true } : { ...item, state: false }
+        );
+        setCheck(updatedItems);
+    };
+    const singleCheck = (id: number) => {
+        const updatedItem = check.map((item) =>
+            item.id === id
+                ? item.state
+                    ? { ...item, state: false }
+                    : { ...item, state: true }
+                : { ...item }
+        );
+        setCheck(updatedItem);
+    };
     return (
         <div className="page">
             <Header />
@@ -46,8 +69,14 @@ function SignupPage() {
                     <CardContent>
                         <form className="w-full h-fit flex flex-col p-2">
                             <div className="w-full h-11 flex items-center gap-3 rounded-sm p-4 bg-neutral-800">
-                                <Checkbox id="terms" />
-                                <Label htmlFor="terms">전체 동의</Label>
+                                <Checkbox
+                                    id="all"
+                                    checked={check[0].state}
+                                    onCheckedChange={(checked: boolean) =>
+                                        handleCheck(checked)
+                                    }
+                                />
+                                <Label htmlFor="all">전체 동의</Label>
                             </div>
                             <Separator className="my-4" />
                             <div className="w-full h-fit flex flex-col items-center p-2 gap-2">
@@ -56,7 +85,13 @@ function SignupPage() {
                                 </span>
                                 <div className="w-full flex items-center justify-between">
                                     <div className="flex items-center gap-2">
-                                        <Checkbox id="service" />
+                                        <Checkbox
+                                            id="service"
+                                            checked={check[1].state}
+                                            onCheckedChange={() =>
+                                                singleCheck(1)
+                                            }
+                                        />
                                         <Label
                                             htmlFor="service"
                                             className="text-sm"
@@ -76,7 +111,13 @@ function SignupPage() {
                                 </div>
                                 <div className="w-full flex items-center justify-between">
                                     <div className="flex items-center gap-2 ">
-                                        <Checkbox id="personal" />
+                                        <Checkbox
+                                            id="personal"
+                                            checked={check[2].state}
+                                            onCheckedChange={() =>
+                                                singleCheck(2)
+                                            }
+                                        />
                                         <Label
                                             htmlFor="personal"
                                             className="text-sm"
@@ -102,7 +143,13 @@ function SignupPage() {
                                 </span>
                                 <div className="w-full flex items-center justify-between">
                                     <div className="flex items-center gap-2">
-                                        <Checkbox id="marketing" />
+                                        <Checkbox
+                                            id="marketing"
+                                            checked={check[3].state}
+                                            onCheckedChange={() =>
+                                                singleCheck(3)
+                                            }
+                                        />
                                         <Label
                                             htmlFor="marketing"
                                             className="text-sm"

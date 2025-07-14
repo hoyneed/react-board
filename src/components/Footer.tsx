@@ -22,7 +22,7 @@ function Footer() {
                 <div className="w-139 min-w-180 h-full">
                     <div className="w-full h-1/2 flex items-center pl-6">
                         <img
-                            src="src/assets/img/logo_large.svg"
+                            src="/src/assets/img/logo_large.svg"
                             alt="large_logo"
                             className="w-20"
                         />
