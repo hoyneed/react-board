@@ -290,7 +290,7 @@ function SignUpForm() {
                             <div className="mt-4 text-center text-sm">
                                 이미 계정이 있으신가요?
                                 <Link
-                                    to={"/sign-in"}
+                                    to={"/login"}
                                     className="underline text-sm ml-1"
                                 >
                                     로그인
