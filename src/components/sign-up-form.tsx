@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { cn } from "@/lib/utils";
 
 import {
     Form,
@@ -32,7 +33,9 @@ import {
 import { Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router";
 import { Button } from "./ui/button";
-import { Navigate } from "react-router";
+import { useNavigate } from "react-router";
+import { createClient } from "@/lib/client";
+import { toast } from "sonner";
 
 // 유효성 체크 (Validation Check)
 const formSchema = z.object({
@@ -74,28 +77,24 @@ function SignUpForm() {
             setShowConfirmPassword((prevState) => !prevState);
         }
     };
+    const navigate = useNavigate();
 
     // 회원가입
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        const supabase = createClient();
         // 2. 회원가입 요청
         try {
-            const { error } = await supabase.auth.signUp({
-                email,
-                password,
-                options: {
-                    emailRedirectTo: `${window.location.origin}/protected`,
-                },
+            const { data } = await supabase.auth.signUp({
+                email: values.email,
+                password: values.password,
             });
-            if (error) throw error;
-            router.push("/auth/sign-up-success");
+            if (data) {
+                toast.success("회원가입을 완료했습니다.");
+                navigate("/Login");
+            }
         } catch (error: unknown) {
-            setError(
-                error instanceof Error ? error.message : "An error occurred"
-            );
-        } finally {
-            setIsLoading(false);
+            console.log("error");
         }
-        console.log(values);
     };
 
     return (
