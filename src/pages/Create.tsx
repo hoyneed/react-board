@@ -6,18 +6,17 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-    ArrowLeft,
-    Asterisk,
-    ChevronDown,
-    Image,
-    ImageOff,
-    Rocket,
-} from "lucide-react";
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { ArrowLeft, Asterisk, ImageOff, Rocket } from "lucide-react";
+
+import TextEditor from "@/components/ui/text-editor";
 
 function CreatePage() {
     return (
@@ -61,62 +60,39 @@ function CreatePage() {
                                     <Asterisk color="red" size={14} />
                                     카테고리
                                 </Label>
-                                <Popover>
-                                    <PopoverTrigger asChild>
-                                        <Button
-                                            variant="outline"
-                                            className="data-[empty=true]:text-muted-foreground w-full justify-between p-2 text-left text-neutral-400 font-normal"
-                                        >
-                                            <p>주제 선택</p>
-                                            <ChevronDown size={36} />
-                                        </Button>
-                                    </PopoverTrigger>
-                                    <PopoverContent className="min-w-[308px] p-0 flex flex-col">
-                                        <Label>토픽 Topic</Label>
-                                        <Button
-                                            variant="secondary"
-                                            className="w-full"
-                                        >
-                                            인문학
-                                        </Button>
-                                        <Button
-                                            variant="secondary"
-                                            className="w-full"
-                                        >
-                                            스타트업
-                                        </Button>
-                                        <Button
-                                            variant="secondary"
-                                            className="w-full"
-                                        >
-                                            IT•프로그래밍
-                                        </Button>
-                                        <Button
-                                            variant="secondary"
-                                            className="w-full"
-                                        >
-                                            서비스•전략 기획
-                                        </Button>
-                                        <Button
-                                            variant="secondary"
-                                            className="w-full"
-                                        >
-                                            마케팅
-                                        </Button>
-                                        <Button
-                                            variant="secondary"
-                                            className="w-full"
-                                        >
-                                            디자인•일러스트
-                                        </Button>
-                                        <Button
-                                            variant="secondary"
-                                            className="w-full"
-                                        >
-                                            자기계발
-                                        </Button>
-                                    </PopoverContent>
-                                </Popover>
+                                <Select>
+                                    <SelectTrigger className="w-full">
+                                        <SelectValue placeholder="주제 선택" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectLabel>
+                                                토픽 Topics
+                                            </SelectLabel>
+                                            <SelectItem value="humanity">
+                                                인문학
+                                            </SelectItem>
+                                            <SelectItem value="startup">
+                                                스타트업
+                                            </SelectItem>
+                                            <SelectItem value="programming">
+                                                IT•프로그래밍
+                                            </SelectItem>
+                                            <SelectItem value="services">
+                                                서비스•전략 기획
+                                            </SelectItem>
+                                            <SelectItem value="marketing">
+                                                마케팅
+                                            </SelectItem>
+                                            <SelectItem value="design">
+                                                디자인•일러스트
+                                            </SelectItem>
+                                            <SelectItem value="self">
+                                                자기계발
+                                            </SelectItem>
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
                             </div>
                             {/* 썸네일 UI */}
                             <div className="flex flex-col space-y-2.5 gap-2">
@@ -133,9 +109,13 @@ function CreatePage() {
                                 </Button>
                             </div>
                         </div>
+                        {/* 텍스트 Editor 영역 */}
+                        <div className="h-full flex-1 flex items-center">
+                            <TextEditor />
+                        </div>
                     </div>
-                    <Footer />
                 </div>
+                <Footer />
             </main>
         </div>
     );

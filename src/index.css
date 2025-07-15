@@ -191,3 +191,12 @@
     font-size: 16px;
     color: var(--muted-foreground);
 }
+.bn-editor {
+    background-color: transparent !important;
+}
+
+@media screen and (max-width: 640px) {
+    .ProseMirror {
+        padding: 0 !important;
+    }
+}
