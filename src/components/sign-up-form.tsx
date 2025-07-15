@@ -32,6 +32,7 @@ import {
 import { Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router";
 import { Button } from "./ui/button";
+import { Navigate } from "react-router";
 
 // 유효성 체크 (Validation Check)
 const formSchema = z.object({
@@ -77,6 +78,23 @@ function SignUpForm() {
     // 회원가입
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         // 2. 회원가입 요청
+        try {
+            const { error } = await supabase.auth.signUp({
+                email,
+                password,
+                options: {
+                    emailRedirectTo: `${window.location.origin}/protected`,
+                },
+            });
+            if (error) throw error;
+            router.push("/auth/sign-up-success");
+        } catch (error: unknown) {
+            setError(
+                error instanceof Error ? error.message : "An error occurred"
+            );
+        } finally {
+            setIsLoading(false);
+        }
         console.log(values);
     };
 
