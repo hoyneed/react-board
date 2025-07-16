@@ -32,7 +32,7 @@ import {
 } from "@/components/ui/input-otp";
 import { Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useNavigate } from "react-router";
 import { createClient } from "@/lib/client";
 import { toast } from "sonner";

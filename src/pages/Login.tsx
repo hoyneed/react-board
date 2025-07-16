@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { LoginForm } from "@/components/login-form";
+import { LoginForm } from "@/components/Auth/login-form";
 
 function LoginPage() {
     return (

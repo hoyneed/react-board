@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import useUserStore from "@/hooks/useUserStore";
 
 export function LoginForm({
     className,
@@ -24,10 +25,11 @@ export function LoginForm({
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    const userStore = useUserStore;
 
+    const supabase = createClient();
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        const supabase = createClient();
         setIsLoading(true);
         setError(null);
 
@@ -38,6 +40,11 @@ export function LoginForm({
             });
             if (error) throw error;
             // Update this route to redirect to an authenticated route. The user already has an active session.
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
+            userStore.getState().updateId(user.id);
+            userStore.getState().updateEmail(user.email);
             navigate("/");
         } catch (error: unknown) {
             setError(
@@ -46,6 +53,9 @@ export function LoginForm({
         } finally {
             setIsLoading(false);
         }
+    };
+    const googleLogin = async () => {
+        supabase.auth.signInWithOAuth({ provider: "google" });
     };
 
     return (
@@ -111,15 +121,14 @@ export function LoginForm({
                         <Button
                             variant="outline"
                             className="w-full font-semibold"
+                            onClick={googleLogin}
                         >
                             <img
                                 src="src/assets/img/google.svg"
                                 alt="구글 이미지"
                                 className="size-4"
                             />
-                            <Link to="https://www.google.com/">
-                                구글로 로그인하기
-                            </Link>
+                            <p>구글로 로그인하기</p>
                         </Button>
                         <div className="flex items-center gap-6  text-sm">
                             <span>계정이 없으신가요? </span>

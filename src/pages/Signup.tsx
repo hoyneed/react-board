@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { SignUpForm } from "@/components/sign-up-form";
+import { SignUpForm } from "@/components/Auth/sign-up-form";
 
 function SignUpPage() {
     return (

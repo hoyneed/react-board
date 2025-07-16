@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { LogoutButton } from "./Auth/logout-button";
 
 function Header() {
     return (
@@ -44,9 +45,7 @@ function Header() {
                     </Link>
                 </div>
                 <div className="header__back h-full w-40 min-w-40 flex items-center justify-between">
-                    <Link to="/Login" className="text-sm text-neutral-300">
-                        로그인
-                    </Link>
+                    <LogoutButton />
                     <Link to="/" className="text-sm text-neutral-300">
                         우리가 하는 일
                     </Link>
