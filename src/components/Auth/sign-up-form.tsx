@@ -13,18 +13,16 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from "@/components/ui/form";
-import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+    Input,
+    Button,
+} from "@/components/ui";
 import { Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router";
-import { Button } from "../ui/button";
 import { useNavigate } from "react-router";
 import { createClient } from "@/lib/client";
 import { toast } from "sonner";
