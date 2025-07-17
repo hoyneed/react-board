@@ -5,12 +5,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { cn } from "@/lib/utils";
 
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -24,12 +22,6 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import {
-    InputOTP,
-    InputOTPGroup,
-    InputOTPSeparator,
-    InputOTPSlot,
-} from "@/components/ui/input-otp";
 import { Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router";
 import { Button } from "../ui/button";
@@ -51,9 +43,6 @@ const formSchema = z.object({
     confirmPassword: z.string().min(8, {
         message: "비밀번호 확인을 입력해주세요.",
     }),
-    pin: z.string().min(6, {
-        message: "OTP는 6자리로 입력해 주세요.",
-    }),
 });
 
 function SignUpForm() {
@@ -63,7 +52,6 @@ function SignUpForm() {
             email: "",
             password: "",
             confirmPassword: "",
-            pin: "",
         },
     });
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -138,58 +126,6 @@ function SignUpForm() {
                                 </FormItem>
                             )}
                         />
-
-                        <div className="flex items-center gap-2">
-                            <FormField
-                                control={form.control}
-                                name="pin"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>One-Time Password</FormLabel>
-                                        <div className="flex items-center gap-2">
-                                            <FormControl>
-                                                <InputOTP
-                                                    maxLength={6}
-                                                    {...field}
-                                                >
-                                                    <InputOTPGroup>
-                                                        <InputOTPSlot
-                                                            index={0}
-                                                        />
-                                                        <InputOTPSlot
-                                                            index={1}
-                                                        />
-                                                        <InputOTPSlot
-                                                            index={2}
-                                                        />
-                                                    </InputOTPGroup>
-                                                    <InputOTPSeparator className="-mx-[1px]" />
-                                                    <InputOTPGroup>
-                                                        <InputOTPSlot
-                                                            index={3}
-                                                        />
-                                                        <InputOTPSlot
-                                                            index={4}
-                                                        />
-                                                        <InputOTPSlot
-                                                            index={5}
-                                                        />
-                                                    </InputOTPGroup>
-                                                </InputOTP>
-                                            </FormControl>
-                                            <Button type="button">
-                                                인증 확인
-                                            </Button>
-                                        </div>
-                                        <FormDescription>
-                                            일회용 비밀번호(OTP)를 입력해
-                                            주세요.
-                                        </FormDescription>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
 
                         <FormField
                             control={form.control}

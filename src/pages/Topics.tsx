@@ -1,11 +1,9 @@
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { Footer, Header } from "@/components/common";
+import { Button, SidebarProvider } from "@/components/ui";
 import { AppSidebar } from "@/components/app-sidebar";
 import NewCard from "@/components/NewCard";
 import Hot from "@/components/Hot";
 import { PencilLine } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 function TopicsPage() {

@@ -1,5 +1,4 @@
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
+import { Footer, Header } from "@/components/common";
 import { SignUpForm } from "@/components/Auth/sign-up-form";
 
 function SignUpPage() {

@@ -1,11 +1,10 @@
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Footer, Header } from "@/components/common";
 import {
+    Button,
+    Separator,
+    Skeleton,
+    Input,
+    Label,
     Select,
     SelectContent,
     SelectGroup,
@@ -13,10 +12,23 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select";
+    Form,
+} from "@/components/ui";
 import { ArrowLeft, Asterisk, ImageOff, Rocket } from "lucide-react";
+import { z } from "zod";
 
-import TextEditor from "@/components/ui/text-editor";
+import TextEditor from "@/components/text-editor";
+// 유효성 체크 (Validation Check)
+const formSchema = z.object({
+    title: z.string({
+        message: "올바른 형식의 이메일 주소를 입력해주세요.",
+    }),
+    category: z.string({
+        message: "카테고리를 선택해 주세요.",
+    }),
+    Thumbnail: z.string(),
+    content: z.json({ message: "내용을 입력해 주세요" }),
+});
 
 function CreatePage() {
     return (
@@ -110,7 +122,7 @@ function CreatePage() {
                             </div>
                         </div>
                         {/* 텍스트 Editor 영역 */}
-                        <div className="h-full flex-1 flex items-center">
+                        <div className="w-full h-full -mr-8 flex-1 flex flex-col flex-wrap text-wrap break-all">
                             <TextEditor />
                         </div>
                     </div>

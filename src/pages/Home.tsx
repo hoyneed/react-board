@@ -1,8 +1,6 @@
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
+import { Header, Footer } from "@/components/common";
 import Hot from "@/components/Hot";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { Button, Textarea } from "@/components/ui";
 import {
     BookOpenText,
     HeartHandshake,
