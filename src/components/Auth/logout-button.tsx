@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/client";
 import { Button } from "@/components/ui/button";
-import { Link, useNavigate, type Session } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useUserStore from "@/hooks/useUserStore";
 

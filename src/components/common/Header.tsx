@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { LogoutButton } from "./Auth/logout-button";
+import { LogoutButton } from "@/components/Auth/logout-button";
 
 function Header() {
     return (
@@ -55,4 +55,4 @@ function Header() {
     );
 }
 
-export default Header;
+export { Header };
