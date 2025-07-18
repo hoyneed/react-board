@@ -166,7 +166,6 @@
 .newTitleEllpsis {
     height: 48px;
     min-height: 48px;
-    flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;

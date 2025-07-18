@@ -1,26 +1,19 @@
 import { ChartNoAxesColumnIncreasing, Heart } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui";
+import { type Topics } from "./common";
 
-function NewCard() {
+function NewCard({ title, category, thumbnail, content }: Topics) {
     return (
         <div className="h-56 min-h-56 flex flex-col items-center justify-between gap-2 p-4 cursor-pointer bg-card text-card-foreground rounded-xl border shadow-sm">
             <div className="h-36 min-h-36 w-full flex items-center gap-6">
                 <img
-                    src=""
-                    alt="본문 이미지"
+                    src={thumbnail}
+                    alt={category}
                     className="size-30 min-h-30 min-w-30 rounded-xl bg-emerald-700"
                 />
-                <div className="h-full flex-1 flex flex-col items-center">
-                    <span className="newTitleEllpsis">
-                        사업을 한다는 것 vs 온라인 플랫폼을 만든다는 것
-                    </span>
-                    <span className="newEllpsis">
-                        2025년이 어느 덧 7월 중순을 향해 달려가고 있다. 2025년도
-                        60% 정도 흘렀다는 걸 의미하겠지. 32년이란 세월을
-                        살아오면서 가장 주도적으로 그리고 주체적으로 살아가고
-                        있음을 느끼는 요즘이다. 그만큼 내 인생에서 올해가 중요한
-                        한 해라는 걸 의미하는지도 모른다.
-                    </span>
+                <div className="h-full flex-1 flex flex-col">
+                    <span className="newTitleESllpsis">{title}</span>
+                    <span className="newEllpsis">{content}</span>
                 </div>
             </div>
             <div className="w-full h-10 min-h-10 gap-2 flex items-center">

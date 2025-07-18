@@ -2,9 +2,7 @@ import { Footer, Header } from "@/components/common";
 import {
     Button,
     Separator,
-    Skeleton,
     Input,
-    Label,
     Select,
     SelectContent,
     SelectGroup,
@@ -20,7 +18,7 @@ import {
     FormMessage,
 } from "@/components/ui";
 import { ArrowLeft, Asterisk, Image, ImageOff, Rocket } from "lucide-react";
-import { z } from "zod";
+import { z, ZodFile } from "zod";
 
 import TextEditor from "@/components/text-editor";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,6 +27,7 @@ import { createClient } from "@/lib/client";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useRef, useState } from "react";
+import { v4 as uuid4 } from "uuid";
 // 유효성 체크 (Validation Check)
 const formSchema = z.object({
     title: z.string().min(2, {
@@ -37,7 +36,7 @@ const formSchema = z.object({
     category: z.string().min(4, {
         message: "카테고리를 선택해 주세요.",
     }),
-    thumbnail: z.optional(z.string().url()),
+    thumbnail: z.any(),
     content: z.optional(
         z.string({
             message:
@@ -47,7 +46,11 @@ const formSchema = z.object({
 });
 
 function CreatePage() {
-    const [thumbnail, setThumbnail] = useState<string | File | null>(null);
+    const [thumbnail, setThumbnail] = useState<File | string | null>(null);
+    const [thumbURL, setThumbURL] = useState<string>("");
+    const [passage, setPassage] = useState<string>("");
+    const [uuid, setUuid] = useState<string>("");
+    const [filePath, setFilePath] = useState<string>("");
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const navigate = useNavigate();
     const form = useForm<z.infer<typeof formSchema>>({
@@ -102,11 +105,63 @@ function CreatePage() {
     // 토픽 발행
     const supabase = createClient();
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        if (thumbnail instanceof File) {
+            const fileExt = thumbnail.name.split(".").pop();
+            setFilePath(`topics-thumbnail/${uuid4()}.` + fileExt);
+        } else if (typeof thumbnail === "string") {
+            const response = await fetch(thumbnail);
+            const blob = await response.blob();
+            const fileExt = thumbnail.split(".").pop();
+            const filename = `${uuid4()}.` + fileExt;
+            setFilePath("topics-thumbnail/" + filename);
+            const myfile = new File([blob], filename, { type: blob.type });
+            setThumbURL(thumbnail);
+            setThumbnail(myfile);
+        } else {
+            toast.error("썸네일이 없습니다!");
+            setFilePath("");
+            return;
+        }
+        try {
+            await supabase.storage
+                .from("topics")
+                .upload(filePath, thumbnail, { upsert: true });
+        } catch (error: unknown) {
+            console.log("error");
+            toast.error("썸네일 업로드 실패!");
+            return;
+        }
+        const { data } = await supabase.storage
+            .from("topics")
+            .getPublicUrl(filePath);
+        setThumbURL(data.publicUrl);
+        try {
+            const { data } = await supabase.auth.getSession();
+            if (typeof data.session?.user.id === "string") {
+                setUuid(data.session?.user.id);
+            }
+            console.log("user id:", uuid);
+        } catch (error: unknown) {
+            toast.error("로그인 된 유저가 아닙니다.");
+            return;
+        }
+        const storageString = localStorage.getItem("editorContent");
+        if (typeof storageString === "string") {
+            const aqw = JSON.parse(storageString);
+            console.log(aqw.length);
+            setPassage(aqw[aqw.length - 1]);
+        } else {
+            toast.error("내용이 없습니다!");
+            return;
+        }
         // 토픽 발행 요청
         try {
             const { data } = await supabase.from("Topics").insert({
                 topic_title: values.title,
                 category: values.category,
+                thumbnail: thumbURL,
+                user_id: uuid,
+                content: passage,
             });
             if (data) {
                 toast.success("토픽 발행을 완료했습니다.");
@@ -260,7 +315,7 @@ function CreatePage() {
                                                     <Button
                                                         variant="outline"
                                                         onClick={() =>
-                                                            setThumbnail(null)
+                                                            setThumbnail("")
                                                         }
                                                     >
                                                         <ImageOff />
@@ -273,15 +328,9 @@ function CreatePage() {
                                 </div>
                                 {/* 텍스트 Editor 영역 */}
                                 <div className="w-full h-full -mr-8 flex-1 flex flex-col flex-wrap text-wrap break-all">
-                                    <FormField
-                                        control={form.control}
-                                        name="content"
-                                        render={({ field }) => (
-                                            <div className="w-full min-h-120 flex-1 md:h-full">
-                                                <TextEditor />
-                                            </div>
-                                        )}
-                                    />
+                                    <div className="w-full min-h-120 flex-1 md:h-full">
+                                        <TextEditor />
+                                    </div>
                                 </div>
                             </div>
                         </form>

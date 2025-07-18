@@ -5,8 +5,40 @@ import NewCard from "@/components/NewCard";
 import Hot from "@/components/Hot";
 import { PencilLine } from "lucide-react";
 import { Link } from "react-router-dom";
+import { createClient } from "@/lib/client";
+import { useEffect, useState } from "react";
+import { type Topics } from "@/components/common";
 
 function TopicsPage() {
+    const [topics, setTopics] = useState<Topics[]>([]);
+    useEffect(() => {
+        const supabase = createClient();
+        const fetchTopics = async () => {
+            try {
+                const { data, error } = await supabase.from("Topics").select();
+                if (error) {
+                    console.log("Error:", error);
+                } else if (data && data.length > 0) {
+                    let topicArray: Topics[] = [];
+                    for (const element of data) {
+                        topicArray.push({
+                            title: element.topic_title,
+                            category: element.category,
+                            thumbnail: element.thumbnail,
+                            content: element.content["content"][0][
+                                "text"
+                            ].slice(0, 300),
+                        });
+                    }
+                    setTopics(topicArray);
+                }
+            } catch (error: unknown) {
+                console.log("Error:", error);
+            }
+        };
+        fetchTopics();
+    }, []);
+
     return (
         <div className="page">
             {/* 헤더 영역 */}
@@ -36,11 +68,16 @@ function TopicsPage() {
                                     </span>
                                 </div>
                                 <div className="w-full flex-1 grid lg:grid-cols-2 grid-cols-1 sm:gap-6 m-2 overflow-auto">
-                                    <NewCard />
-                                    <NewCard />
-                                    <NewCard />
-                                    <NewCard />
-                                    <NewCard />
+                                    {topics.length > 0 &&
+                                        topics.map((topic, index) => (
+                                            <NewCard
+                                                key={index}
+                                                title={topic.title}
+                                                category={topic.category}
+                                                thumbnail={topic.thumbnail}
+                                                content={topic.content}
+                                            />
+                                        ))}
                                 </div>
                             </div>
                             <div className="fixed right-1/2 bottom-10 translate-x-1/2 z-20 flex items-center gap-3 md:gap-4">
