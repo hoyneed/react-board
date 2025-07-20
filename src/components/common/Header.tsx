@@ -44,7 +44,7 @@ function Header() {
                         밍거진
                     </Link>
                 </div>
-                <div className="header__back h-full w-40 min-w-40 flex items-center justify-between">
+                <div className="header__back h-full w-48 min-w-48 flex items-center justify-end gap-2">
                     <LogoutButton />
                     <Link to="/" className="text-sm text-neutral-300">
                         우리가 하는 일

@@ -8,12 +8,13 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { BlockNoteView } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
-// import { createClient } from "@/lib/client";
+
 async function saveToStorage(jsonBlocks: Block[]) {
     // Save contents to local storage. You might want to debounce this or replace
     // with a call to your API / database.
     localStorage.setItem("editorContent", JSON.stringify(jsonBlocks));
 }
+
 async function loadFromStorage() {
     // Gets the previously stored editor contents.
     const storageString = localStorage.getItem("editorContent");

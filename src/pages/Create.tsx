@@ -16,9 +16,10 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
+    Label,
 } from "@/components/ui";
 import { ArrowLeft, Asterisk, Image, ImageOff, Rocket } from "lucide-react";
-import { z, ZodFile } from "zod";
+import { z } from "zod";
 
 import TextEditor from "@/components/text-editor";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -36,13 +37,6 @@ const formSchema = z.object({
     category: z.string().min(4, {
         message: "카테고리를 선택해 주세요.",
     }),
-    thumbnail: z.any(),
-    content: z.optional(
-        z.string({
-            message:
-                "내용을 입력해 주세요. 내용은 최소 10자 이상이어야 합니다.",
-        })
-    ),
 });
 
 function CreatePage() {
@@ -115,26 +109,34 @@ function CreatePage() {
             const filename = `${uuid4()}.` + fileExt;
             setFilePath("topics-thumbnail/" + filename);
             const myfile = new File([blob], filename, { type: blob.type });
-            setThumbURL(thumbnail);
             setThumbnail(myfile);
         } else {
             toast.error("썸네일이 없습니다!");
             setFilePath("");
             return;
         }
+
         try {
-            await supabase.storage
+            const { data } = await supabase.storage
                 .from("topics")
                 .upload(filePath, thumbnail, { upsert: true });
+            if (data) {
+                setThumbURL(
+                    `${import.meta.env
+                        .VITE_SUPABASE_URL!}/storage/v1/object/public/topics/${filePath}`
+                );
+            } else {
+                console.log("error");
+                toast.error("썸네일 업로드 실패!");
+                return;
+            }
         } catch (error: unknown) {
-            console.log("error");
+            console.log("error: ", error);
             toast.error("썸네일 업로드 실패!");
             return;
         }
-        const { data } = await supabase.storage
-            .from("topics")
-            .getPublicUrl(filePath);
-        setThumbURL(data.publicUrl);
+
+        console.log("thumbURL: ", thumbURL);
         try {
             const { data } = await supabase.auth.getSession();
             if (typeof data.session?.user.id === "string") {
@@ -149,27 +151,31 @@ function CreatePage() {
         if (typeof storageString === "string") {
             const aqw = JSON.parse(storageString);
             console.log(aqw.length);
-            setPassage(aqw[aqw.length - 1]);
+            setPassage(aqw[0]);
         } else {
             toast.error("내용이 없습니다!");
             return;
         }
         // 토픽 발행 요청
         try {
-            const { data } = await supabase.from("Topics").insert({
-                topic_title: values.title,
-                category: values.category,
-                thumbnail: thumbURL,
-                user_id: uuid,
-                content: passage,
-            });
+            const { data } = await supabase
+                .from("Topics")
+                .insert({
+                    topic_title: values.title,
+                    category: values.category,
+                    thumbnail: thumbURL,
+                    user_id: uuid,
+                    content: passage,
+                })
+                .select();
             if (data) {
                 toast.success("토픽 발행을 완료했습니다.");
                 navigate("/Topics");
             }
         } catch (error: unknown) {
-            console.log("error");
+            console.log("Error", error);
             toast.error("오류가 발생했습니다!");
+            return;
         }
     };
     return (
@@ -289,41 +295,26 @@ function CreatePage() {
                                     </div>
                                     {/* 썸네일 UI */}
                                     <div className="flex flex-col space-y-2.5 gap-2">
-                                        <FormField
-                                            control={form.control}
-                                            name="thumbnail"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel className="h-[14px] flex items-center gap-2">
-                                                        썸네일
-                                                    </FormLabel>
-                                                    {handleRenderPreview()}
-                                                    <FormControl>
-                                                        <Input
-                                                            type="file"
-                                                            {...field}
-                                                            ref={fileInputRef}
-                                                            onChange={
-                                                                handleChangeFile
-                                                            }
-                                                            className="hidden"
-                                                        />
-                                                    </FormControl>
-                                                    <FormMessage />
-                                                    <Separator className="-mt-2 -mb-[1px]" />
-                                                    {/* 썸네일 제거 버튼 */}
-                                                    <Button
-                                                        variant="outline"
-                                                        onClick={() =>
-                                                            setThumbnail("")
-                                                        }
-                                                    >
-                                                        <ImageOff />
-                                                        썸네일 제거
-                                                    </Button>
-                                                </FormItem>
-                                            )}
+                                        <Label className="h-[14px] flex items-center gap-2">
+                                            썸네일
+                                        </Label>
+                                        {handleRenderPreview()}
+
+                                        <Input
+                                            type="file"
+                                            ref={fileInputRef}
+                                            onChange={handleChangeFile}
+                                            className="hidden"
                                         />
+                                        <Separator className="-mt-2 -mb-[1px]" />
+                                        {/* 썸네일 제거 버튼 */}
+                                        <Button
+                                            variant="outline"
+                                            onClick={() => setThumbnail(null)}
+                                        >
+                                            <ImageOff />
+                                            썸네일 제거
+                                        </Button>
                                     </div>
                                 </div>
                                 {/* 텍스트 Editor 영역 */}

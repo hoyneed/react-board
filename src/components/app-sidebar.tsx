@@ -1,14 +1,4 @@
-import {
-    ChartNoAxesCombined,
-    ChevronDown,
-    CodeXml,
-    DraftingCompass,
-    Footprints,
-    Goal,
-    Lightbulb,
-    List,
-    Rocket,
-} from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 import {
     Sidebar,
@@ -21,67 +11,21 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useState } from "react";
-// import TOPIC_CATEGORY from "@/constants/category.constant";
+import { TOPIC_CATEGORY } from "@/constants/category.constant";
+import useCategory from "@/hooks/useCategory";
 
 export function AppSidebar() {
     // Menu items.
-    const [items, setItems] = useState([
-        {
-            title: "전체",
-            url: "#",
-            icon: List,
-            light: true,
-        },
-        {
-            title: "인문학",
-            url: "#",
-            icon: Lightbulb,
-            light: false,
-        },
-        {
-            title: "스타트업",
-            url: "#",
-            icon: Rocket,
-            light: false,
-        },
-        {
-            title: "IT•프로그래밍",
-            url: "#",
-            icon: CodeXml,
-            light: false,
-        },
-        {
-            title: "서비스•전략 기획",
-            url: "#",
-            icon: Goal,
-            light: false,
-        },
-        {
-            title: "마케팅",
-            url: "#",
-            icon: ChartNoAxesCombined,
-            light: false,
-        },
-        {
-            title: "디자인•일러스트",
-            url: "#",
-            icon: DraftingCompass,
-            light: false,
-        },
-        {
-            title: "자기계발",
-            url: "#",
-            icon: Footprints,
-            light: false,
-        },
-    ]);
+    const [items, setItems] = useState(TOPIC_CATEGORY);
     const handleItem = (selectedTitle: string) => {
         const updatedItem = items.map((item) =>
-            item.title === selectedTitle
-                ? { ...item, light: true }
-                : { ...item, light: false }
+            item.label === selectedTitle
+                ? { ...item, selected: true }
+                : { ...item, selected: false }
         );
         setItems(updatedItem);
+        useCategory.getState().updateLabel(selectedTitle);
+        console.log("Current Category: ", useCategory.getState().label);
     };
 
     return (
@@ -94,17 +38,17 @@ export function AppSidebar() {
                     <SidebarGroupContent className="pl-4">
                         <SidebarMenu className="gap-2">
                             {items.map((item) => (
-                                <SidebarMenuItem key={item.title}>
+                                <SidebarMenuItem key={item.label}>
                                     <SidebarMenuButton
                                         asChild
-                                        onClick={() => handleItem(item.title)}
-                                        isActive={item.light}
+                                        onClick={() => handleItem(item.label)}
+                                        isActive={item.selected}
                                         className="hover:pl-6 transition-all duration-300"
                                     >
-                                        <a href={item.url}>
+                                        <div>
                                             <item.icon />
-                                            <span>{item.title}</span>
-                                        </a>
+                                            <span>{item.label}</span>
+                                        </div>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             ))}

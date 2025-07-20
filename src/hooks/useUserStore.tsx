@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 type State = { id: string; email: string };
 type Action = {
@@ -14,7 +14,7 @@ const useUserStore = create<State & Action>()(
             updateId: (id) => set({ id: id }),
             updateEmail: (email) => set({ email: email }),
         }),
-        { name: "user-email" }
+        { name: "user-email", storage: createJSONStorage(() => sessionStorage) }
     )
 );
 

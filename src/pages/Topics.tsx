@@ -8,11 +8,22 @@ import { Link } from "react-router-dom";
 import { createClient } from "@/lib/client";
 import { useEffect, useState } from "react";
 import { type Topics } from "@/components/common";
+import useCategory from "@/hooks/useCategory";
 
 function TopicsPage() {
     const [topics, setTopics] = useState<Topics[]>([]);
+    const [category, setCategory] = useState<string>("전체");
     useEffect(() => {
         const supabase = createClient();
+        const unsubscribe = useCategory.subscribe(
+            (state) => state.label,
+            (newLabel, prevLabel) => {
+                console.log(
+                    `category changed from ${prevLabel} to ${newLabel}`
+                );
+                setCategory(newLabel);
+            }
+        );
         const fetchTopics = async () => {
             try {
                 const { data, error } = await supabase.from("Topics").select();
@@ -25,9 +36,7 @@ function TopicsPage() {
                             title: element.topic_title,
                             category: element.category,
                             thumbnail: element.thumbnail,
-                            content: element.content["content"][0][
-                                "text"
-                            ].slice(0, 300),
+                            content: element.content["content"][0]["text"],
                         });
                     }
                     setTopics(topicArray);
@@ -69,15 +78,22 @@ function TopicsPage() {
                                 </div>
                                 <div className="w-full flex-1 grid lg:grid-cols-2 grid-cols-1 sm:gap-6 m-2 overflow-auto">
                                     {topics.length > 0 &&
-                                        topics.map((topic, index) => (
-                                            <NewCard
-                                                key={index}
-                                                title={topic.title}
-                                                category={topic.category}
-                                                thumbnail={topic.thumbnail}
-                                                content={topic.content}
-                                            />
-                                        ))}
+                                        topics.map((topic, index) => {
+                                            if (category === topic.title || "")
+                                                return (
+                                                    <NewCard
+                                                        key={index}
+                                                        title={topic.title}
+                                                        category={
+                                                            topic.category
+                                                        }
+                                                        thumbnail={
+                                                            topic.thumbnail
+                                                        }
+                                                        content={topic.content}
+                                                    />
+                                                );
+                                        })}
                                 </div>
                             </div>
                             <div className="fixed right-1/2 bottom-10 translate-x-1/2 z-20 flex items-center gap-3 md:gap-4">
