@@ -122,7 +122,7 @@ function CreatePage() {
                 .upload(filePath, thumbnail, { upsert: true });
             if (data) {
                 setThumbURL(
-                    `${import.meta.env
+                    `${process.env
                         .VITE_SUPABASE_URL!}/storage/v1/object/public/topics/${filePath}`
                 );
             } else {
