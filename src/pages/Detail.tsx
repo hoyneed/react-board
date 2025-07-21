@@ -89,8 +89,12 @@ function Detail() {
                             </Button>
                         )}
                     </div>
-                    <div className="h-7 text-black text-sm"> #{category}</div>
-                    <div className="h-9 text-black text-[30px]">{title}</div>
+                    <div className="h-7 text-white text-sm bg-secondary rounded-sm flex items-center justify-center">
+                        #{category}
+                    </div>
+                    <div className="h-9 text-white bg-secondary text-[30px] flex items-center justify-center rounded-lg px-1 py-6">
+                        {title}
+                    </div>
                     <div className="w-8 flex items-center justify-center">
                         <Separator className="my-4" />
                     </div>
