@@ -13,15 +13,17 @@ import {
     Separator,
 } from "@/components/ui";
 import { createClient } from "@/lib/client";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { TOPIC_CATEGORY } from "@/constants/category.constant";
 
 function Detail() {
     const [title, setTitle] = useState<string>("");
     const [category, setCategory] = useState<string>("");
     const [thumbnail, setThumbnail] = useState<string>("");
+    const [createdDate, setCreatedDate] = useState<string>("");
     const [uuid, setUuid] = useState<string>("");
     const [login, setLogin] = useState<string>("");
     const { id } = useParams();
@@ -36,12 +38,20 @@ function Detail() {
                     .select("*")
                     .eq("id", id);
                 if (data) {
-                    for (const element of data) {
-                        setTitle(element.topic_title);
-                        setCategory(element.category);
-                        setThumbnail(element.thumbnail);
-                        setUuid(element.user_id);
-                    }
+                    const element = data.at(0);
+                    let label = TOPIC_CATEGORY.find(
+                        (item) => item.category === element.category
+                    )?.label;
+                    setTitle(element.topic_title);
+                    if (typeof label === "string") setCategory(label);
+                    setThumbnail(element.thumbnail);
+                    setCreatedDate(
+                        element.created_at
+                            .split("T")
+                            .at(0)
+                            .replaceAll("-", ". ")
+                    );
+                    setUuid(element.user_id);
                 }
             } catch (error: unknown) {
                 console.log("error", error);
@@ -73,6 +83,11 @@ function Detail() {
                                 <ChevronLeft color="#fff" />
                             </Link>
                         </Button>
+                        {uuid === login && (
+                            <Button variant="secondary" className="w-8 h-8">
+                                <Trash2 color="Red" />
+                            </Button>
+                        )}
                     </div>
                     <div className="h-7 text-black text-sm"> #{category}</div>
                     <div className="h-9 text-black text-[30px]">{title}</div>
@@ -80,7 +95,7 @@ function Detail() {
                         <Separator className="my-4" />
                     </div>
                     <div className="h-7 text-black text-sm flex items-center justify-center">
-                        {uuid === login && <p>작성자가 로그인 돼 있습니다.</p>}
+                        {createdDate}
                     </div>
                     <div className=""></div>
                 </div>

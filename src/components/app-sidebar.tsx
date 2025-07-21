@@ -19,13 +19,13 @@ export function AppSidebar() {
     const [items, setItems] = useState(TOPIC_CATEGORY);
     const handleItem = (selectedTitle: string) => {
         const updatedItem = items.map((item) =>
-            item.label === selectedTitle
+            item.category === selectedTitle
                 ? { ...item, selected: true }
                 : { ...item, selected: false }
         );
         setItems(updatedItem);
         useCategory.getState().updateLabel(selectedTitle);
-        console.log("Current Category: ", useCategory.getState().label);
+        console.log("Current Category: ", useCategory.getState().category);
     };
 
     return (
@@ -38,10 +38,12 @@ export function AppSidebar() {
                     <SidebarGroupContent className="pl-4">
                         <SidebarMenu className="gap-2">
                             {items.map((item) => (
-                                <SidebarMenuItem key={item.label}>
+                                <SidebarMenuItem key={item.category}>
                                     <SidebarMenuButton
                                         asChild
-                                        onClick={() => handleItem(item.label)}
+                                        onClick={() =>
+                                            handleItem(item.category)
+                                        }
                                         isActive={item.selected}
                                         className="hover:pl-6 transition-all duration-300"
                                     >

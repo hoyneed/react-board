@@ -1,3 +1,4 @@
+"use client";
 import { Footer, Header } from "@/components/common";
 import {
     Button,
@@ -122,7 +123,7 @@ function CreatePage() {
             if (data) {
                 console.log("Uploaded filePath: ", filePath);
                 setThumbURL(
-                    `${process.env
+                    `${import.meta.env
                         .VITE_SUPABASE_URL!}/storage/v1/object/public/topics/${filePath}`
                 );
             } else {
@@ -150,7 +151,7 @@ function CreatePage() {
         if (typeof storageString === "string") {
             const aqw = JSON.parse(storageString);
             console.log(aqw.length);
-            setPassage(aqw[0]);
+            setPassage(aqw);
         } else {
             toast.error("내용이 없습니다!");
             return;

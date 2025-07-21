@@ -7,9 +7,19 @@ import {
     Lightbulb,
     List,
     Rocket,
+    type LucideProps,
 } from "lucide-react";
+interface Topics {
+    id: number;
+    label: string;
+    category: string;
+    icon: React.ForwardRefExoticComponent<
+        Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
+    >;
+    selected: boolean;
+}
 
-export const TOPIC_CATEGORY = [
+export const TOPIC_CATEGORY: Topics[] = [
     { id: 1, label: "전체", category: "", icon: List, selected: true },
     {
         id: 2,

@@ -1,14 +1,14 @@
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 
-type State = { label: string };
+type State = { category: string };
 type Action = {
-    updateLabel: (email: string) => void;
+    updateLabel: (category: string) => void;
 };
 const useCategory = create<State & Action>()(
     subscribeWithSelector((set) => ({
-        label: "전체",
-        updateLabel: (newLabel) => set({ label: newLabel }),
+        category: "",
+        updateLabel: (newCate) => set({ category: newCate }),
     }))
 );
 
