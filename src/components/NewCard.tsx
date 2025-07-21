@@ -2,9 +2,10 @@ import { ChartNoAxesColumnIncreasing, Heart } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui";
 import { type Topics } from "./common";
 
-function NewCard({ title, category, thumbnail, content }: Topics) {
+function NewCard({ id, title, category, thumbnail, content }: Topics) {
     return (
-        <div className="h-56 min-h-56 flex flex-col items-center justify-between gap-2 p-4 cursor-pointer bg-card text-card-foreground rounded-xl border shadow-sm">
+        <div className="h-56 min-h-56 flex flex-col items-center justify-between gap-2 p-4 cursor-pointer bg-card text-card-foreground rounded-xl border shadow-sm relative">
+            <p className="absolute top-1 left-1 text-xs">#{id}</p>
             <div className="h-36 min-h-36 w-full flex items-center gap-6">
                 <img
                     src={thumbnail}

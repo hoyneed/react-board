@@ -33,6 +33,7 @@ function TopicsPage() {
                     let topicArray: Topics[] = [];
                     for (const element of data) {
                         topicArray.push({
+                            id: element.id,
                             title: element.topic_title,
                             category: element.category,
                             thumbnail: element.thumbnail,
@@ -79,10 +80,13 @@ function TopicsPage() {
                                 <div className="w-full flex-1 grid lg:grid-cols-2 grid-cols-1 sm:gap-6 m-2 overflow-auto">
                                     {topics.length > 0 &&
                                         topics.map((topic, index) => {
-                                            if (category === topic.title || "")
-                                                return (
+                                            return (
+                                                <Link
+                                                    to={`/Topics/${topic.id}`}
+                                                >
                                                     <NewCard
                                                         key={index}
+                                                        id={topic.id}
                                                         title={topic.title}
                                                         category={
                                                             topic.category
@@ -92,7 +96,8 @@ function TopicsPage() {
                                                         }
                                                         content={topic.content}
                                                     />
-                                                );
+                                                </Link>
+                                            );
                                         })}
                                 </div>
                             </div>

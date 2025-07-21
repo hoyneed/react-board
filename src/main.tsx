@@ -6,6 +6,7 @@ import LoginPage from "./pages/Login";
 import SignupPage from "./pages/Signup";
 import TopicsPage from "./pages/Topics";
 import CreatePage from "./pages/Create";
+import Detail from "./pages/Detail";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "sonner";
@@ -19,7 +20,10 @@ createRoot(document.getElementById("root")!).render(
                     <Route path="/" element={<HomePage />} />
                     <Route path="/Sign-up" element={<SignupPage />} />
                     <Route path="/Login" element={<LoginPage />} />
-                    <Route path="/Topics" element={<TopicsPage />} />
+                    <Route path="/Topics">
+                        <Route index element={<TopicsPage />} />
+                        <Route path=":id" element={<Detail />} />
+                    </Route>
                     <Route path="/Topics/new-topic" element={<CreatePage />} />
                 </Routes>
                 <Toaster />

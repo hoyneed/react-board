@@ -14,3 +14,4 @@ export * from "./sidebar";
 export * from "./skeleton";
 // export * from "./sonner";
 export * from "./textarea";
+export * from "@/components/ui/alert-dialog";

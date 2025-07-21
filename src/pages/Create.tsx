@@ -112,7 +112,6 @@ function CreatePage() {
             setThumbnail(myfile);
         } else {
             toast.error("썸네일이 없습니다!");
-            setFilePath("");
             return;
         }
 
@@ -121,12 +120,12 @@ function CreatePage() {
                 .from("topics")
                 .upload(filePath, thumbnail, { upsert: true });
             if (data) {
+                console.log("Uploaded filePath: ", filePath);
                 setThumbURL(
                     `${process.env
                         .VITE_SUPABASE_URL!}/storage/v1/object/public/topics/${filePath}`
                 );
             } else {
-                console.log("error");
                 toast.error("썸네일 업로드 실패!");
                 return;
             }
@@ -170,6 +169,7 @@ function CreatePage() {
                 .select();
             if (data) {
                 toast.success("토픽 발행을 완료했습니다.");
+                localStorage.removeItem("editorContent");
                 navigate("/Topics");
             }
         } catch (error: unknown) {
